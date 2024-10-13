@@ -46,8 +46,20 @@ public class ContatoServiceImpl implements ContatoService {
     public Contato update(Long id, ContatoDTO contatoDTO) {
         Contato contatoExistente = contatoRepository.findById(id).orElseThrow(() -> new ContatoNotFoundException(id));
 
-        contatoExistente.setNome(contatoDTO.getNome());
-        contatoExistente.setContato(contatoDTO.getContato());
+        boolean isUpdated = false;
+
+        if (contatoDTO.getNome() != null && !contatoDTO.getNome().isEmpty()) {
+            contatoExistente.setNome(contatoDTO.getNome());
+            isUpdated = true;
+        }
+        if (contatoDTO.getContato() != null && !contatoDTO.getContato().isEmpty()) {
+            contatoExistente.setContato(contatoDTO.getContato());
+            isUpdated = true;
+        }
+
+        if (!isUpdated) {
+            throw new IllegalArgumentException("Pelo menos um campo deve ser atualizado.");
+        };
 
         return contatoRepository.save(contatoExistente);
     }
