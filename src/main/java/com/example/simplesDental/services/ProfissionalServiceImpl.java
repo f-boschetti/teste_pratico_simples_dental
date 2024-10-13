@@ -19,7 +19,7 @@ public class ProfissionalServiceImpl implements ProfissionalService {
     private ProfissionalRepository profissionalRepository;
 
     @Autowired
-    private ContatoRepository contatoRepository;
+    private ContatoService contatoService;
 
     @Override
     public Profissional save(ProfissionalDTO profissionalDTO) {
@@ -85,7 +85,7 @@ public class ProfissionalServiceImpl implements ProfissionalService {
         profissionalExistente.setAtivo(false);
         List<Contato> contatos = profissionalExistente.getContatos();
         // Aqui também deveria ser uma exclusão lógica
-        contatoRepository.deleteAll(contatos);
+        contatoService.deletarContatos(contatos);
         profissionalRepository.save(profissionalExistente);
     }
 

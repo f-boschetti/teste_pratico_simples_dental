@@ -149,4 +149,9 @@ public class ContatoServiceImpl implements ContatoService {
 
         return filteredContato;
     }
+
+    @Override
+    public void deletarContatos(List<Contato> contatos) {
+        contatoRepository.deleteAll(contatos);
+    }
 }

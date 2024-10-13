@@ -51,4 +51,6 @@ public interface ContatoService {
      * @param id O ID do contato a ser excluído.
      */
     void delete(Long id);
+
+    void deletarContatos(List<Contato> contatos);
 }
