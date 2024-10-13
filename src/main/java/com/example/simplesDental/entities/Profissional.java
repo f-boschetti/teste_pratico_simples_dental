@@ -29,7 +29,7 @@ public class Profissional {
     @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDate createdDate = LocalDate.now();
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Contato> contatos;
 
