@@ -1,9 +1,0 @@
-services:
-  postgres:
-    image: 'postgres:latest'
-    environment:
-      - 'POSTGRES_DB=simples_dental'
-      - 'POSTGRES_PASSWORD='
-      - 'POSTGRES_USER='
-    ports:
-      - '5432'
