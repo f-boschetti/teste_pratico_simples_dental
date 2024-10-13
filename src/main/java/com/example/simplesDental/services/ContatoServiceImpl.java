@@ -103,7 +103,7 @@ public class ContatoServiceImpl implements ContatoService {
 
         if (!isUpdated) {
             throw new IllegalArgumentException("Pelo menos um campo deve ser atualizado.");
-        };
+        }
 
         return contatoRepository.save(contatoExistente);
     }
@@ -130,8 +130,9 @@ public class ContatoServiceImpl implements ContatoService {
      * @param fields A lista de campos que devem ser incluídos no contato filtrado.
      * @return Um novo objeto Contato contendo apenas os campos especificados.
      */
-    private Contato filterContatoByFields(Contato contato, List<String> fields) {
+    protected Contato filterContatoByFields(Contato contato, List<String> fields) {
         Contato filteredContato = new Contato();
+        filteredContato.setCreatedDate(null);
 
         if (fields.contains("id")) {
             filteredContato.setId(contato.getId());

@@ -50,4 +50,14 @@ public class Contato {
     @JoinColumn(name = "profissional_id", nullable = false)
     @JsonBackReference
     private Profissional profissional;
+
+    @Override
+    public String toString() {
+        return "Contato{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", contato='" + contato + '\'' +
+                ", createdDate=" + createdDate +
+                '}';
+    }
 }
