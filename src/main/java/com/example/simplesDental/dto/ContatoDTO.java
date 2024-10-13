@@ -1,6 +1,7 @@
 package com.example.simplesDental.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -14,4 +15,7 @@ public class ContatoDTO {
     @NotBlank(message = "Contato é obrigatório")
     @Size(max = 255, message = "O contato deve ter no máximo 255 caracteres")
     private String contato;
+
+    @NotNull(message = "Profissional é obrigatório")
+    private Long profissionalId;
 }

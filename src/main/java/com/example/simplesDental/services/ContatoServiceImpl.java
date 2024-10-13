@@ -2,8 +2,11 @@ package com.example.simplesDental.services;
 
 import com.example.simplesDental.dto.ContatoDTO;
 import com.example.simplesDental.entities.Contato;
+import com.example.simplesDental.entities.Profissional;
 import com.example.simplesDental.exceptions.ContatoNotFoundException;
+import com.example.simplesDental.exceptions.ResourceNotFoundException;
 import com.example.simplesDental.repositories.ContatoRepository;
+import com.example.simplesDental.repositories.ProfissionalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +19,18 @@ public class ContatoServiceImpl implements ContatoService {
     @Autowired
     private ContatoRepository contatoRepository;
 
+    @Autowired
+    private ProfissionalRepository profissionalRepository;
+
     @Override
     public Contato save(ContatoDTO contatoDTO) {
+        Profissional profissional = profissionalRepository.findById(contatoDTO.getProfissionalId())
+                .orElseThrow(() -> new ResourceNotFoundException("Profissional com ID " + contatoDTO.getProfissionalId() + " não encontrado"));
+
         Contato contato = new Contato();
         contato.setNome(contatoDTO.getNome());
         contato.setContato(contatoDTO.getContato());
+        contato.setProfissional(profissional);
 
         return contatoRepository.save(contato);
     }
@@ -64,10 +74,13 @@ public class ContatoServiceImpl implements ContatoService {
         return contatoRepository.save(contatoExistente);
     }
 
-    //Deveria ser uma exclusão logica
+    // Deveria ser uma exclusão logica talvez
     @Override
     public void delete(Long id) {
-        contatoRepository.deleteById(id);
+        Contato contato = contatoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Contato com ID " + id + " não encontrado"));
+
+        contatoRepository.delete(contato);
     }
 
     private Contato filterContatoByFields(Contato contato, List<String> fields) {
