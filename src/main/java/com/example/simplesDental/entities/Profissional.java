@@ -1,6 +1,7 @@
 package com.example.simplesDental.entities;
 
 import com.example.simplesDental.enums.Cargo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -28,6 +29,11 @@ public class Profissional {
     @Column(name = "created_date", nullable = false, updatable = false)
     private LocalDate createdDate = LocalDate.now();
 
-    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "profissional", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Contato> contatos;
+
+    @Column(nullable = false)
+    private boolean ativo = true;
+
 }
